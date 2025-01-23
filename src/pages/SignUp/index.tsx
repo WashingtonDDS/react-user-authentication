@@ -2,6 +2,7 @@ import styles from "./signUp.module.css";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { TInputsValue } from "../../interfaces/signUpInterface";
 
 const schema = yup
   .object({
@@ -25,18 +26,29 @@ export function SignUp() {
   } = useForm({
     resolver: yupResolver(schema),
   });
+
+  const handleFormSignUp = (inputsValue: TInputsValue) => {
+    console.log(inputsValue);
+  };
   return (
     <main className={styles.main}>
       <div className={styles.containerLeft}>
-        <form className={styles.containerLeft__form}>
+        <form
+          onSubmit={handleSubmit(handleFormSignUp)}
+          className={styles.containerLeft__form}
+        >
           <h2 className={styles.containerLeft__title}>Cadastre-se</h2>
 
-          <input name="name" type="text" placeholder="Nome" />
-
-          <input name="email" type="text" placeholder="Email" />
-
-          <input name="password" type="password" placeholder="Senha" />
-
+          <input {...register("name")} type="text" placeholder="Nome" />
+          <p>{errors.name?.message}</p>
+          <input {...register("email")} type="text" placeholder="Email" />
+          <p>{errors.email?.message}</p>
+          <input
+            {...register("password")}
+            type="password"
+            placeholder="Senha"
+          />
+          <p>{errors.password?.message}</p>
           <button className={`btn btn__positive ${styles.btn__register}`}>
             CADASTRAR
           </button>
