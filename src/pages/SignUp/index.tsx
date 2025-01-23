@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { TInputsValue } from "../../interfaces/signUpInterface";
+import api from "../../services/api";
 
 const schema = yup
   .object({
@@ -27,8 +28,19 @@ export function SignUp() {
     resolver: yupResolver(schema),
   });
 
-  const handleFormSignUp = (inputsValue: TInputsValue) => {
-    console.log(inputsValue);
+  const handleFormSignUp = async (inputsValue: TInputsValue) => {
+    try {
+      const { data } = await api.post("/usuarios", {
+        nome: inputsValue.name,
+        email: inputsValue.email,
+        senha: inputsValue.password,
+      });
+      if (data) {
+        alert("Cadastrado com sucesso");
+      }
+    } catch (err) {
+      alert("Ocorreu um erro");
+    }
   };
   return (
     <main className={styles.main}>
