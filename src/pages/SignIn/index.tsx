@@ -2,9 +2,6 @@ import styles from "./signIn.module.css";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { TInputsValue } from "../../interfaces/signUpInterface";
-import api from "../../services/api";
-import { useNavigate } from "react-router-dom";
 
 const schema = yup
   .object({
@@ -21,6 +18,14 @@ const schema = yup
   .required();
 
 export function SignIn() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
   return (
     <main className={styles.main}>
       <div className={styles.containerLeft}></div>
