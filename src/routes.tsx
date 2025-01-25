@@ -19,6 +19,7 @@ export const MainRoutes = () => {
       >
         <Route path="/home" element={<Home />} />
       </Route>
+      <Route path="*" element={<h1>Página não encontrada (404)</h1>} />
     </Routes>
   );
 };
