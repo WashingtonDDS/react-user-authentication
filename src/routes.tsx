@@ -25,5 +25,5 @@ export const MainRoutes = () => {
 
 const ProtectedRoutes = () => {
   const token = localStorage.getItem("token");
-  return token ? <Outlet /> : <Navigate to="/" />;
+  return token ? <Outlet /> : <Navigate to="/signin" />;
 };
