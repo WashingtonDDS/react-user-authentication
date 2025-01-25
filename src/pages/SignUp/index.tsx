@@ -4,6 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { TInputsValue } from "../../interfaces/signUpInterface";
 import api from "../../services/api";
+import { useNavigate } from "react-router-dom";
 
 const schema = yup
   .object({
@@ -20,6 +21,7 @@ const schema = yup
   .required();
 
 export function SignUp() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -37,6 +39,7 @@ export function SignUp() {
       });
       if (data) {
         alert("Cadastrado com sucesso");
+        navigate("/signin");
       }
     } catch (err) {
       alert("Ocorreu um erro");
