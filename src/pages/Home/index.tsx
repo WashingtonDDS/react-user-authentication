@@ -12,7 +12,7 @@ export function Home() {
           <input name="price" type="number" placeholder="Preço R$" />
 
           <button className={`btn btn__positive ${styles.btn__register}`}>
-            ATUALIZAR
+            CADASTRAR
           </button>
         </form>
         <ul className={styles.transactions}>
