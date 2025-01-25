@@ -2,6 +2,9 @@ import styles from "./signIn.module.css";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { TIsignIn } from "../../interfaces/signInInterface";
+import api from "../../services/api";
+import { useNavigate } from "react-router-dom";
 
 const schema = yup
   .object({
@@ -17,6 +20,7 @@ const schema = yup
   .required();
 
 export function SignIn() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -25,7 +29,22 @@ export function SignIn() {
     resolver: yupResolver(schema),
   });
 
-  const handleFormSignIn = () => {};
+  const handleFormSignIn = async (inputsValue: TIsignIn) => {
+    try {
+      const { data } = await api.post("/login", {
+        email: inputsValue.email,
+        senha: inputsValue.password,
+      });
+      if (data) {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.usuario));
+
+        navigate("/home");
+      }
+    } catch (err) {
+      alert("Ocorreu um erro");
+    }
+  };
   return (
     <main className={styles.main}>
       <div className={styles.containerLeft}></div>
