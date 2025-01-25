@@ -1,25 +1,24 @@
-import { Header } from '../../components/Header'
-import styles from './home.module.css'
+import { Header } from "../../components/Header";
+import styles from "./home.module.css";
 export function Home() {
   return (
     <div className={styles.container__home}>
       <Header />
       <div className={styles.content__home}>
-
         <form>
-          <h2>Perfil</h2>
-          <input name="name" type="text" placeholder="Nome" />
+          <h2>Contas</h2>
+          <input name="description" type="text" placeholder="Conta" />
 
-          <input name="email" type="text" placeholder="Email" />
+          <input name="price" type="number" placeholder="Preço R$" />
 
-          <input name="password" type="password" placeholder="Senha" />
-
-          <div className={styles.container__buttons}>
-            <button className={`btn btn__positive ${styles.btn__register}`}>ATUALIZAR</button>
-            <button className={`btn btn__negative ${styles.btn__cancel}`}>EXCLUIR</button>
-          </div>
+          <button className={`btn btn__positive ${styles.btn__register}`}>
+            ATUALIZAR
+          </button>
         </form>
+        <ul className={styles.transactions}>
+          <li>Internet - R$ 100</li>
+        </ul>
       </div>
     </div>
-  )
+  );
 }
