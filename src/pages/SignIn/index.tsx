@@ -5,7 +5,6 @@ import * as yup from "yup";
 
 const schema = yup
   .object({
-    name: yup.string().required("O nome é obrigatorio"),
     email: yup
       .string()
       .required("O email é obrigatorio")
@@ -26,20 +25,28 @@ export function SignIn() {
     resolver: yupResolver(schema),
   });
 
+  const handleFormSignIn = () => {};
   return (
     <main className={styles.main}>
       <div className={styles.containerLeft}></div>
       <div className={styles.containerRight}>
-        <form className={styles.containerRight__form}>
+        <form
+          onSubmit={handleSubmit(handleFormSignIn)}
+          className={styles.containerRight__form}
+        >
           <span>Bem vindo</span>
           <h1 className={styles.containerRight__title}>
             Faça o login com sua conta
           </h1>
 
-          <input name="email" type="text" placeholder="Email" />
-
-          <input name="password" type="password" placeholder="Senha" />
-
+          <input {...register("email")} type="text" placeholder="Email" />
+          <p>{errors.email?.message}</p>
+          <input
+            {...register("password")}
+            type="password"
+            placeholder="Senha"
+          />
+          <p>{errors.password?.message}</p>
           <button className={`btn btn__positive ${styles.btn__login}`}>
             LOGIN
           </button>
