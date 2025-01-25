@@ -1,9 +1,7 @@
-import { Header } from "../../components/Header";
 import styles from "./home.module.css";
 export function Home() {
   return (
     <div className={styles.container__home}>
-      <Header />
       <div className={styles.content__home}>
         <form>
           <h2>Contas</h2>
