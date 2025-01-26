@@ -7,7 +7,7 @@ import {
   TTransactionInput,
 } from "../../interfaces/homeInterface";
 import transactionsApi from "../../services/transactionsApi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const schema = yup
   .object({
@@ -28,6 +28,20 @@ export function Home() {
     resolver: yupResolver(schema),
   });
 
+  useEffect(() => {});
+
+  const loadTransactions = async () => {
+    try {
+      const { data }: { data: TTransaction[] } = await transactionsApi.get(
+        "/transactions"
+      );
+      if (data) {
+        setTransactions(data);
+      }
+    } catch (err) {
+      alert("Ocorreu um erro");
+    }
+  };
   const addTransaction = async (inputsValue: TTransactionInput) => {
     try {
       const { data } = await transactionsApi.post("/transactions", {
