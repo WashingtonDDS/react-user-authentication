@@ -2,8 +2,12 @@ import styles from "./home.module.css";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { TTransaction } from "../../interfaces/homeInterface";
+import {
+  TTransaction,
+  TTransactionInput,
+} from "../../interfaces/homeInterface";
 import transactionsApi from "../../services/transactionsApi";
+import { useState } from "react";
 
 const schema = yup
   .object({
@@ -15,6 +19,7 @@ const schema = yup
   })
   .required();
 export function Home() {
+  const [transactions, setTransactions] = useState<TTransaction[]>([]);
   const {
     register,
     handleSubmit,
@@ -23,13 +28,14 @@ export function Home() {
     resolver: yupResolver(schema),
   });
 
-  const addTransaction = async (inputsValue: TTransaction) => {
+  const addTransaction = async (inputsValue: TTransactionInput) => {
     try {
-      const { data } = transactionsApi.post("/transactions", {
+      const { data } = await transactionsApi.post("/transactions", {
         id: crypto.randomUUID(),
         description: inputsValue.description,
         price: inputsValue.price,
       });
+      setTransactions((prevTransactions) => [...prevTransactions, data]);
     } catch (err) {
       alert("Ocorreu um erro");
     }
@@ -49,7 +55,11 @@ export function Home() {
           </button>
         </form>
         <ul className={styles.transactions}>
-          <li>Internet - R$ 100</li>
+          {transactions.map((item) => (
+            <li key={item.id}>
+              {item.description} - {item.price}
+            </li>
+          ))}
         </ul>
       </div>
     </div>
