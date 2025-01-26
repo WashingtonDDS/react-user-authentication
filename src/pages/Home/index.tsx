@@ -9,6 +9,7 @@ import {
 } from "../../interfaces/homeInterface";
 import transactionsApi from "../../services/transactionsApi";
 import { useEffect, useState } from "react";
+import { NavLink, useParams } from "react-router-dom";
 
 const schema = yup
   .object({
@@ -21,6 +22,10 @@ const schema = yup
   .required();
 export function Home() {
   const [transactions, setTransactions] = useState<TTransaction[]>([]);
+  const [filteredTransactions, setFilteredTransactions] = useState<
+    TTransaction[]
+  >([]);
+  const params = useParams();
   const {
     register,
     handleSubmit,
@@ -31,7 +36,12 @@ export function Home() {
 
   useEffect(() => {
     loadTransactions();
-  }, []);
+    if (!params.id) return;
+    const newFilteredTransactions = transactions.filter(
+      (item) => item.id === params.id
+    );
+    setFilteredTransactions(newFilteredTransactions);
+  }, [params, transactions]);
 
   const loadTransactions = async () => {
     try {
@@ -81,13 +91,26 @@ export function Home() {
             CADASTRAR
           </button>
         </form>
-        <ul className={styles.transactions}>
-          {transactions.map((item) => (
-            <li key={item.id}>
-              {item.description} - {formatedPrice(item.price)}
-            </li>
-          ))}
-        </ul>
+        {filteredTransactions.length > 0 ? (
+          <ul className={styles.transactions}>
+            {filteredTransactions.map((item) => (
+              <li key={item.id}>
+                {item.id} - {item.description} - {formatedPrice(item.price)}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <ul className={styles.transactions}>
+            {transactions.map((item) => (
+              <li key={item.id}>
+                {item.description} - {formatedPrice(item.price)}
+                <NavLink style={{ float: "right" }} to={`/home/${item.id}`}>
+                  Detalhamento
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );
