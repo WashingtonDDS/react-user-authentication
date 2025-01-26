@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { TTransaction } from "../../interfaces/homeInterface";
+import transactionsApi from "../../services/transactionsApi";
 
 const schema = yup
   .object({
@@ -22,8 +23,16 @@ export function Home() {
     resolver: yupResolver(schema),
   });
 
-  const addTransaction = (inputsValue: TTransaction) => {
-    console.log(inputsValue);
+  const addTransaction = async (inputsValue: TTransaction) => {
+    try {
+      const { data } = transactionsApi.post("/transactions", {
+        id: crypto.randomUUID(),
+        description: inputsValue.description,
+        price: inputsValue.price,
+      });
+    } catch (err) {
+      alert("Ocorreu um erro");
+    }
   };
 
   return (
@@ -32,9 +41,9 @@ export function Home() {
         <form onSubmit={handleSubmit(addTransaction)}>
           <h2>Contas</h2>
           <input {...register("description")} type="text" placeholder="Conta" />
-
+          <p>{errors.description?.message}</p>
           <input {...register("price")} type="number" placeholder="Preço R$" />
-
+          <p>{errors.price?.message}</p>
           <button className={`btn btn__positive ${styles.btn__register}`}>
             CADASTRAR
           </button>
