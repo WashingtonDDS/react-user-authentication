@@ -35,7 +35,10 @@ export function Home() {
         description: inputsValue.description,
         price: inputsValue.price,
       });
-      setTransactions((prevTransactions) => [...prevTransactions, data]);
+
+      if (data) {
+        setTransactions((prevTransactions) => [...prevTransactions, data]);
+      }
     } catch (err) {
       alert("Ocorreu um erro");
     }

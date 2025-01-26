@@ -4,6 +4,21 @@
       "id": "e5664c11-45e8-497c-b058-f95b24e44800",
       "description": "Internet",
       "price": 10000
+    },
+    {
+      "id": "964db8ec-942e-4e7c-a756-8b2adb4329e7",
+      "description": "internet",
+      "price": 100
+    },
+    {
+      "id": "cde3972f-e95e-4373-9349-3a3eae12a6a7",
+      "description": "TV",
+      "price": 100
+    },
+    {
+      "id": "ac71d2e3-cb59-4824-87da-1ee6a68cb8cd",
+      "description": "internet",
+      "price": 100
     }
   ]
 }
