@@ -8,3 +8,7 @@ export type TTransaction = {
   description: string;
   price: number;
 };
+
+export type TDataTransaction = {
+  data: TTransaction[];
+};

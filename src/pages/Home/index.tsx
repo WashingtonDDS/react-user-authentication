@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import {
+  TDataTransaction,
   TTransaction,
   TTransactionInput,
 } from "../../interfaces/homeInterface";
@@ -28,11 +29,13 @@ export function Home() {
     resolver: yupResolver(schema),
   });
 
-  useEffect(() => {});
+  useEffect(() => {
+    loadTransactions();
+  }, []);
 
   const loadTransactions = async () => {
     try {
-      const { data }: { data: TTransaction[] } = await transactionsApi.get(
+      const { data }: TDataTransaction = await transactionsApi.get(
         "/transactions"
       );
       if (data) {
