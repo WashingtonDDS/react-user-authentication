@@ -45,6 +45,13 @@ export function Home() {
       alert("Ocorreu um erro");
     }
   };
+
+  const formatedPrice = (price: number) => {
+    return new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(price);
+  };
   const addTransaction = async (inputsValue: TTransactionInput) => {
     try {
       const { data } = await transactionsApi.post("/transactions", {
@@ -77,7 +84,7 @@ export function Home() {
         <ul className={styles.transactions}>
           {transactions.map((item) => (
             <li key={item.id}>
-              {item.description} - {item.price}
+              {item.description} - {formatedPrice(item.price)}
             </li>
           ))}
         </ul>
