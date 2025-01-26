@@ -41,7 +41,7 @@ export function Home() {
       (item) => item.id === params.id
     );
     setFilteredTransactions(newFilteredTransactions);
-  }, [params, transactions]);
+  }, [params]);
 
   const loadTransactions = async () => {
     try {
